@@ -50,12 +50,17 @@ $(() => {
     ships.push(submarine);
     ships.push(destroyer);
 
+    // I like your idea of adding a data structure for each ship. However, if you would have put all ships into
+    // an array, you could have used the Array.some function (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some)
+    // to make looking for unplaced ships more elegant.
     while(carrier.placed == false || battleship.placed == false || cruiser.placed == false || submarine.place == false || destroyer.placed == false)
     {
       for(var i = 0; i < 5; i++)
       {
+        // Avoid `== false` in such cases, just write `if (!ships[i].placed)`.
         if(ships[i].placed == false)
         {
+          // Why is that necessary?
           var str = JSON.stringify(ships[i]);
           var environmentalInfo = randomPlacing(ships[i],battlegroundArray);
           battlegroundArray = environmentalInfo.playingField;
@@ -74,9 +79,11 @@ $(() => {
 
 function randomPlacing(ship,battlegroundArray)
 {
+  // Don't forget to use `const` instead of `var` for constants.
   var environmentalInfo = {playingField: battlegroundArray, isPlaced: false};
   var upper = 9;
   var lower = 0;
+  // Math.random returns a value betweeen 0 and 1 (EXCLUING). Is your formula correct if you take that into account?
   var x = Math.floor(Math.random() *(upper - lower) + lower);
   var y = Math.floor(Math.random() *(upper - lower) + lower);
   
